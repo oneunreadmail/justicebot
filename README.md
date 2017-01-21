@@ -12,15 +12,20 @@ Create a bot using Telegram official instruction https://core.telegram.org/bots#
 
 Put your token in settings.ini file
 
+Run the script
+
 ...
 
 Profit!
 
-## TODO
+(or you can just add telegram.me/justicedeliverybot to your group)
 
-To move lines and responses in separate customizable file
+## TODO
+To move lines and responses in separate customizable file [done]
 
 To make unittest for re-function
+
+To handle error messages
 
 ## Licence
 The MIT License (MIT)

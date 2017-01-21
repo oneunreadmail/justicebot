@@ -25,7 +25,7 @@ def handle(msg):
                         reply = choice(case["responses"])  # choosing random reply
                         reply = reply.replace("%u", msg['from']['first_name'])  # replacing %u with first name
                         for i in range(len(words)):
-                            reply = reply.replace("%"+str(i+1), words[i])  # replacing %i with custom word form
+                            reply = reply.replace("%"+str(i), words[i])  # replacing %i with custom word form
                         bot.sendMessage(chat_id, reply)
                         break
 

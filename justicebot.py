@@ -1,41 +1,33 @@
-import telepot  # библиотека для работы с телеграм-ботами
-from configparser import ConfigParser  # библиотека для работы с ini-файлами, прочитать токен
+import telepot  # core library to work with telegram
+from configparser import ConfigParser  # ini-file parser library
 import time
-import re  # регулярки для анализа текста
+import re
+from random import choice
+from dictionary import dictionary
 
 config = ConfigParser()
-config.read("settings.ini")  # читаем токен из файла
+config.read("token.ini")  # reading token from file
 
 bot = telepot.Bot(config['MAIN']['token'])
-
-stoplist = [
-    "лох", "пидор", "гей", "мудак", "мудило", "хуйло", "дрочер", "лошок", "лошпед", "гондон", "говноед", "чмо",
-    "олень", "мразь", "остолоп", "балбес", "олух", "ушлепок", "ушлёпок", "ишак", "дебил"
-]
-
-threehundredlist = [
-    "триста", "300", "зоо", "три сто", "три ста"
-]
 
 
 def someone_said_the_bad_words(word, string):
     return re.search(r"\b" + word + r"\b", string, re.I)
 
+
 def handle(msg):
     content_type, chat_type, chat_id = telepot.glance(msg)
     if content_type == 'text':
-        for word in stoplist:
-            if someone_said_the_bad_words(word, msg["text"]):
-                bot.sendMessage(chat_id, "Сам ты " + word + ", " + msg['from']['first_name'])
-                break
-        for word in threehundredlist:
-            if someone_said_the_bad_words(word, msg["text"]):
-                bot.sendMessage(chat_id, "Отсоси у тракториста, " + msg['from']['first_name'])
-                break
-        for word in ["нет"]:
-            if someone_said_the_bad_words(word, msg["text"]):
-                bot.sendMessage(chat_id, "Пидора ответ, " + msg['from']['first_name'])
-                break
+        for case in dictionary:
+            for words in case["lines"]:
+                for word in words:
+                    if someone_said_the_bad_words(word, msg["text"]):
+                        reply = choice(case["responses"])  # choosing random reply
+                        reply = reply.replace("%u", msg['from']['first_name'])  # replacing %u with first name
+                        for i in range(len(words)):
+                            reply = reply.replace("%"+str(i+1), words[i])  # replacing %i with custom word form
+                        bot.sendMessage(chat_id, reply)
+                        break
 
 bot.message_loop(handle)
 while 1:

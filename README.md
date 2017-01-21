@@ -27,6 +27,8 @@ To make unittest for re-function
 
 To handle error messages
 
+To skip messages sent before bot activation
+
 ## Licence
 The MIT License (MIT)
 

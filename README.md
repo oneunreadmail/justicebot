@@ -32,6 +32,4 @@ To skip messages sent before bot activation
 ## Licence
 The MIT License (MIT)
 
-Copyright (c) 2014-2015 Scott Barr
-
 See [LICENSE.md](LICENSE.md)
